@@ -1,15 +1,12 @@
-# Utilisation d'une image de base Java
-FROM openjdk:17
+FROM maven:3.8.2-jdk-11 AS build
+COPY . .
+RUN mvn clean package -Pprod -DskipTests
 
-# Répertoire de travail
-WORKDIR /app
-
-# Copier le fichier JAR de l'application Spring Boot dans le conteneur
-COPY target/Notes-0.0.1-SNAPSHOT.jar /app/application.jar
-
-
-# Exposer le port sur lequel l'application Spring Boot fonctionne (par exemple, 8080)
-EXPOSE 8081
-
-# Commande pour lancer l'application Spring Boot
-CMD ["java", "-jar", "application.jar"]
+#
+# Package stage
+#
+FROM openjdk:11
+COPY --from=build /target/Notes-0.0.1-SNAPSHOT.jar Notes.jar
+# ENV PORT=8080
+EXPOSE 8080
+ENTRYPOINT ["java","-jar","Notes.jar"]
