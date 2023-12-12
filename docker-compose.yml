@@ -1,0 +1,30 @@
+version: '3'
+
+services:
+  backend:
+    image: backend1
+    container_name: backend1 
+    ports:
+      - "8080:8080"
+
+    env_file:
+      - .env
+
+    depends_on:
+      - mysql
+
+  frontend:
+    image: frontend 
+    container_name: frontend
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend1
+  mysql:
+    image: mysql
+    restart: always
+    container_name: db
+    ports:
+      - "3306:3306"
+    env_file:
+      - .env
