@@ -6,26 +6,24 @@ services:
     container_name: backend1 
     ports:
       - "8080:8080"
-
     env_file:
       - .env
-
     depends_on:
       - mysql
 
-  frontend:  # Corrected service name
+  frontend:
     image: fontend 
     container_name: fontend
     ports:
       - "3000:3000"
     depends_on:
-      - backend  # Corrected service name
+      - backend
 
   mysql:
-  image: mysql
-  restart: always
-  container_name: db
-  ports:
-    - "3306:3306"
-  environment:
-    MYSQL_ROOT_PASSWORD: oumayma
+    image: mysql
+    restart: always
+    container_name: db
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: oumayma
