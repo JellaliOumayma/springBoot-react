@@ -13,13 +13,14 @@ services:
     depends_on:
       - mysql
 
-  fontend:
+  frontend:  # Corrected service name
     image: fontend 
     container_name: fontend
     ports:
       - "3000:3000"
     depends_on:
-      - backend1
+      - backend  # Corrected service name
+
   mysql:
     image: mysql
     restart: always
