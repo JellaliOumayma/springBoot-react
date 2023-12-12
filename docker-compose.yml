@@ -22,10 +22,10 @@ services:
       - backend  # Corrected service name
 
   mysql:
-    image: mysql
-    restart: always
-    container_name: db
-    ports:
-      - "3306:3306"
-    env_file:
-      - .env
+  image: mysql
+  restart: always
+  container_name: db
+  ports:
+    - "3306:3306"
+  environment:
+    MYSQL_ROOT_PASSWORD: oumayma
