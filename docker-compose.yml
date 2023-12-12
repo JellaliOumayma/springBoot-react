@@ -12,8 +12,8 @@ services:
       - mysql
 
   frontend:
-    image: fontend 
-    container_name: fontend
+    image: frontend 
+    container_name: frontend
     ports:
       - "3000:3000"
     depends_on:
