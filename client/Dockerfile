@@ -1,20 +1,12 @@
-# Utilisation d'une image de base Node.js
-FROM node:14
-
-# Répertoire de travail
-WORKDIR /app
-
-# Copier les fichiers de l'application React dans le conteneur
+FROM maven:3.8.2-jdk-11 AS build
 COPY . .
+RUN mvn clean package -Pprod -DskipTests
 
-# Installer les dépendances
-RUN npm install
-
-# Construire l'application React
-RUN npm run build
-
-# Exposer le port sur lequel l'application React fonctionne (par exemple, 3000)
-EXPOSE 3000
-
-# Commande pour lancer l'application React
-CMD ["npm", "start"] 
+#
+# Package stage
+#
+FROM openjdk:11-jdk-slim
+COPY --from=build /target/Notes-0.0.1-SNAPSHOT.jar Notes.jar
+# ENV PORT=8080
+EXPOSE 8080
+ENTRYPOINT ["java","-jar","Notes.jar"]
