@@ -1,13 +1,17 @@
-# Stage de construction
-FROM maven:3.8.2-openjdk-17 AS build
-WORKDIR /app
-COPY . .
-RUN mvn clean package -Pprod -DskipTests
+# Utilisation d'une image de base Java
+FROM openjdk:16
 
-# Stage de package
-FROM openjdk:17
+# Répertoire de travail
 WORKDIR /app
-COPY --from=build /app/target/Notes-0.0.1-SNAPSHOT.jar Notes.jar
+
+# Copier le fichier JAR de l'application Spring Boot dans le conteneur
+COPY target/Notes-0.0.1-SNAPSHOT.jar /app/ Notes.jar
+
+
+# Exposer le port sur lequel l'application Spring Boot fonctionne (par exemple, 8080)
 EXPOSE 8080
-ENTRYPOINT ["java", "-jar", "Notes.jar"]
+
+# Commande pour lancer l'application Spring Boot
+CMD ["java", "-jar", "Notes.jar"]
+
 
