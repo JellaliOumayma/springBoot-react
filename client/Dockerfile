@@ -1,5 +1,5 @@
 # Utilisation d'une image de base Node.js
-FROM node:18-alpine
+FROM node:14
 
 # Répertoire de travail
 WORKDIR /app
@@ -17,4 +17,4 @@ RUN npm run build
 EXPOSE 3000
 
 # Commande pour lancer l'application React
-CMD ["npm", "start"]
+CMD ["npm", "start"] 
